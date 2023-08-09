@@ -1,8 +1,15 @@
-FROM debian:buster
+FROM debian:buster-slim
 
-RUN apt-get update \
-    && apt-get install -y nginx \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt install -y php php-fpm php-mysql wordpress mariadb-client curl \
+    && apt clean && rm -rf /var/lib/apt/lists/*
 
-RUN apt install php81 php81-fpm php81-mysql php81-mbstring php81-xml php81-gd php81-curl php81-zip php81-intl php81-common php81-cli php81-opcache
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    && chmod +x wp-cli.phar  \
+    && mv wp-cli.phar /usr/local/bin/wp \
+    && mkdir /run/php \
+    && wp core download --path=/var/www/html --allow-root 
+
+COPY ./script.sh script.sh
+
+CMD ["bash", "script.sh"]
+
