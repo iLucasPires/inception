@@ -9,15 +9,16 @@ services:
 
   mariadb:
     container_name: mariadb
-    image: mariadb
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpass
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wpuser
-      MYSQL_PASSWORD: wppass
+    build: ./requirements/mariadb
+    env_file:
+      - .env
     networks:
       - inception
+    healthcheck:
+      test: /usr/bin/mariadb-admin ping -h localhost
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   wordpress:
     container_name: wordpress
@@ -25,10 +26,10 @@ services:
     networks:
       - inception
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     env_file:
       - .env
-
 
 networks:
   inception:
