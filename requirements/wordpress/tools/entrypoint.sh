@@ -29,4 +29,4 @@ if ! wp core is-installed --path=/var/www/html/ --allow-root; then
         --allow-root
 fi
 
-php-fpm${PHP_VERSION} --nodaemonize
+exec "$@"

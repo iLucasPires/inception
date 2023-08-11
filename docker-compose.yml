@@ -1,12 +1,4 @@
 services:
-  nginx:
-    container_name: nginx
-    build: ./requirements/nginx
-    ports:
-      - 443:443
-    networks:
-      - inception
-
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb
@@ -15,7 +7,7 @@ services:
     networks:
       - inception
     healthcheck:
-      test: /usr/bin/mariadb-admin ping -h localhost
+      test: mysqladmin  ping -h localhost
       interval: 30s
       timeout: 10s
       retries: 3
@@ -30,7 +22,31 @@ services:
         condition: service_healthy
     env_file:
       - .env
+    healthcheck:
+      test: cgi-fcgi -bind -connect 127.0.0.1:9000
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    volumes:
+      - wordpress_data:/var/www/html
+
+  nginx:
+    container_name: nginx
+    build: ./requirements/nginx
+    ports:
+      - 443:443
+    networks:
+      - inception
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    volumes:
+      - wordpress_data:/var/www/html
 
 networks:
   inception:
     driver: bridge
+
+volumes:
+  wordpress_data:
+    driver: local

@@ -10,4 +10,7 @@ COPY ./tools/entrypoint.sh /entrypoint.sh
 
 EXPOSE 3306
 
+RUN chmod +x /entrypoint.sh
+
 ENTRYPOINT ["bash", "/entrypoint.sh"]
+CMD ["mysqld_safe"]
