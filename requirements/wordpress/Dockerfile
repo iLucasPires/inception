@@ -1,23 +1,22 @@
-FROM debian:buster-slim
+FROM debian:bullseye-slim
 
 RUN apt update && apt install -y \
-    php php-fpm php-mysql wordpress mariadb-client wget libfcgi-bin \
-    && apt-get clean && rm -rf /var/lib/apt/lists/* 
+    php7.4-fpm php7.4-mysql mariadb-client libfcgi-bin wget && \
+    apt clean && rm -rf /var/lib/apt/lists/*
 
-RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
-    && chmod +x wp-cli.phar \
-    && mv wp-cli.phar /usr/local/bin/wp \
-    && wp core download --allow-root --path=/var/www/html/ \
-    && mkdir /run/php 
+RUN mkdir -p /var/www/html/ /run/php && \
+    chown www-data:www-data /var/www/html/ /run/php && \
+    chmod 755 /run/php && \
+    wget -O /usr/local/bin/wp \
+    https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar && \
+    chmod +x /usr/local/bin/wp && \
+    wp core download --path=/var/www/html/ --allow-root
 
-WORKDIR /var/www/html/
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
+COPY ./conf/wp-config.php /var/www/html/wp-config.php
 
-COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d/www.conf
-COPY ./tools/entrypoint.sh /entrypoint.sh
+COPY ./tools/entrypoint.sh /tmp/entrypoint.sh
+RUN chmod +x /tmp/entrypoint.sh
 
-EXPOSE 9000
-
-RUN chmod +x /entrypoint.sh
-
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["php-fpm7.3", "-F"]
+ENTRYPOINT ["/tmp/entrypoint.sh"]
+CMD ["php-fpm7.4", "-F"]

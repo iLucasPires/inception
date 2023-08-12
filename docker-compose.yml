@@ -11,6 +11,9 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+    volumes:
+      - mariadb_data:/var/lib/mysql
+
 
   wordpress:
     container_name: wordpress
@@ -49,4 +52,17 @@ networks:
 
 volumes:
   wordpress_data:
+    name: wordpress-data
     driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/wordpress
+
+  mariadb_data:
+    name: mariadb-data
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/mariadb
