@@ -57,7 +57,7 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/${USER}/data/wordpress
+      device: /home/lpires-n/data/wordpress
 
   mariadb_data:
     name: mariadb-data
@@ -65,4 +65,4 @@ volumes:
     driver_opts:
       o: bind
       type: none
-      device: /home/${USER}/data/mariadb
+      device: /home/lpires-n/data/mariadb

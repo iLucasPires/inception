@@ -11,4 +11,4 @@ RUN chmod +x /entrypoint.sh
 EXPOSE 3306
 
 ENTRYPOINT ["/entrypoint.sh"]
-CMD ["mysqld_safe"]
+CMD ["mysqld", "--user=mysql"]
