@@ -8,6 +8,10 @@ COPY ./tools/entrypoint.sh /entrypoint.sh
 
 RUN chmod +x /entrypoint.sh
 
+RUN mkdir -p /run/mysqld && \ 
+    chown mysql:mysql /run/mysqld/ && \
+    chmod 755 /run/mysqld/
+
 EXPOSE 3306
 
 ENTRYPOINT ["/entrypoint.sh"]

@@ -1,9 +1,9 @@
 <?php
 
-define( "WP_HOME", "https://" .$_SERVER["HTTP_HOST"]. "/" );
-define( "WP_SITEURL", "https://" .$_SERVER["HTTP_HOST"]. "/" );
+define( "WP_HOME", "https://" . (isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] : "") . "/" );
+define( "WP_SITEURL", "https://" . (isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] : "") . "/" );
 define( 'WP_CACHE', true );
-define('WP_CACHE_KEY_SALT', getenv('DOMAIN_NAME') );
+define( 'WP_CACHE_KEY_SALT', getenv('URL') );
 define( 'DB_NAME', getenv('DB_NAME') );
 define( 'DB_USER', getenv('DB_USER') );
 define( 'DB_PASSWORD', getenv('DB_PASS') );
@@ -16,6 +16,6 @@ $table_prefix = 'wp_';
 define( 'WP_DEBUG', false );
 
 if ( ! defined( 'ABSPATH' ) ) {
-	define( 'ABSPATH', __DIR__ . '/' );
+    define( 'ABSPATH', __DIR__ . '/' );
 }
 require_once ABSPATH . 'wp-settings.php';
