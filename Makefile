@@ -1,16 +1,16 @@
 all: build
 
 up:
-	@docker-compose -f srcs/docker-compose.yml up -d
+	@docker-compose -f srcs/docker-compose.yml up
 
 build: setup
-	@docker-compose -f srcs/docker-compose.yml up -d --build
+	@docker-compose -f srcs/docker-compose.yml up --build
 
 down:
 	@docker-compose -f srcs/docker-compose.yml down
 
 re: down
-	@docker-compose -f srcs/docker-compose.yml up -d --build
+	@docker-compose -f srcs/docker-compose.yml up --build
 
 clean: down
 	@docker system prune -f

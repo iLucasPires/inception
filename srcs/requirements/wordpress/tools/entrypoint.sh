@@ -9,7 +9,7 @@ if ! wp core is-installed --path=/var/www/html/ --allow-root; then
         --admin_email="$ADMIN_EMAIL" \
         --path=/var/www/html/ \
         --allow-root
-
+    
     wp user create \
         "$SUBSCRIBER_USER" \
         "$SUBSCRIBER_EMAIL" \
