@@ -1,5 +1,6 @@
 services:
   mariadb:
+    image: mariadb:inception
     container_name: mariadb
     build: ./requirements/mariadb
     networks:
@@ -16,6 +17,7 @@ services:
 
 
   wordpress:
+    image: wordpress:inception
     container_name: wordpress
     build: ./requirements/wordpress
     networks:
@@ -34,6 +36,7 @@ services:
       - wordpress_data:/var/www/html
 
   nginx:
+    image: nginx:inception
     container_name: nginx
     build: ./requirements/nginx
     ports:

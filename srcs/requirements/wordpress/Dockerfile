@@ -1,6 +1,6 @@
 FROM debian:bullseye-slim
 
-RUN apt update && apt install -y php-fpm php-mysql mariadb-client libfcgi-bin wget && \
+RUN apt update && apt install -y php-fpm php-mysql libfcgi-bin wget && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /var/www/html/

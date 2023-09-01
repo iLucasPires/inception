@@ -18,6 +18,7 @@ clean: down
 fclean: clean
 	sudo rm -rf /home/lpires-n/
 	sudo sed -in '/127.0.0.1 lpires-n.42.fr/d' /etc/hosts
+
 ls:
 	docker container ls
 	docker image ls
