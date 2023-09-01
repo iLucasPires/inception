@@ -1,6 +1,5 @@
 <?php
 
-
 define( "WP_HOME", "https://" . (isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] : "") . "/" );
 define( "WP_SITEURL", "https://" . (isset($_SERVER["HTTP_HOST"]) ? $_SERVER["HTTP_HOST"] : "") . "/" );
 define( 'WP_CACHE', true );
