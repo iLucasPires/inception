@@ -2,10 +2,10 @@ services:
   mariadb:
     container_name: mariadb
     build: ./requirements/mariadb
-    env_file:
-      - .env
     networks:
       - inception
+    env_file:
+      - .env
     healthcheck:
       test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p${DB_ROOT}"]
       interval: 5s
@@ -20,11 +20,11 @@ services:
     build: ./requirements/wordpress
     networks:
       - inception
+    env_file:
+      - .env
     depends_on:
       mariadb:
         condition: service_healthy
-    env_file:
-      - .env
     healthcheck:
       test: cgi-fcgi -bind -connect 127.0.0.1:9000
       interval: 5s
