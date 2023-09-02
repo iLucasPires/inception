@@ -8,13 +8,12 @@ services:
     env_file:
       - .env
     healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping -h localhost -u root -p${DB_ROOT}"]
+      test: mysqladmin ping -h localhost -u root -p${DB_ROOT}
       interval: 5s
       timeout: 5s
       retries: 10
     volumes:
       - mariadb_data:/var/lib/mysql
-
 
   wordpress:
     image: wordpress:inception
