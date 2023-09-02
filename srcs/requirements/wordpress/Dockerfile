@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM debian:bullseye
 
 RUN apt update && apt install -y php-fpm php-mysql libfcgi-bin wget && \
     apt clean && rm -rf /var/lib/apt/lists/*
